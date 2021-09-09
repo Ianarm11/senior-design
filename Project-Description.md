@@ -12,4 +12,4 @@
 
 ## Project Area:
 
-* Out project will revolve around researching covert channels. We aim to create a generalized framework for designing a cover channel and them implementing the framework to create our own covert channel.
+* Out project will revolve around researching covert channels. We aim to create a generalized framework for designing a covert channel and then implementing the framework to create our own covert channel.
