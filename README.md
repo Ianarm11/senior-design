@@ -29,11 +29,41 @@ Our project goal is to create a generalized framework for creating a covert chan
 Covert channels are a major threat to software systems, yet upon researching them, there are more resources on how to detect them than on how to build them. We believe that for cyber-security engineers to be able to stop system exploits from covert channels then they need to understand how they are built.
 
 ### User Stories <a name="user-stories"></a>
+* As a hacker, I want to design a covert channel based on the framework, to save time.
+* As a hacker, I want to refer to the framework when designing my covert channel, to have guidance.
+* As a government official, I want to be capable of transmitting information in a covert channel, to prevent detection.
+* As a cyber security analysis, I want to learn from this framework, to help detect covert channels.
 
 ### Design Diagrams <a name="design-diagrams"></a>
 Add Photos here
 
 ### Project Tasks <a name="project-tasks"></a>
+* Read, research, and note-take on meltdown.pdf
+* Read, research, and note-take on spectre.pdf
+* Read, research, and note-take on technologiesofcovertnetworks.pdf
+* Read, research, and note-take on 'Understand Covert Channels of Communication' web article
+* Read, research, and note-take on 'How Insiders Use TCP/IP to create Covert Channels' web article
+* Read, research, and note-take on 'Steganography' web article
+* Read, research, and note-take on  covertcommunicationinmobileapplications.pdf
+* Read, research, and note-take on designofcovertattacks.pdf
+* Read, research, and note-take on practicaldevelopmentanddeploymentofcovertcommunication.pdf
+
+* Ian, Noah, John, Chase all design the layout of the framework
+* Ian, Noah, John, Chase all develop the framework
+* Ian, Noah, John, Chase all refine the framework
+* Ian, Noah, John, Chase all test the framework
+
+* Ian, Noah, Chase, John all design which type of covert channel we will create
+* Chase and John develop necessary infrastructure/backend for covert channel
+* Ian and Noah design the Sender of covert channel
+* Ian and Noah design the Receiver of covert channel
+* Chase and John develop tests for detecting the covert channel
+* Chase and John develop tests for using the covert channel
+
+* Ian, Noah, John, Chase all document their initial research
+* Ian, Noah, John, Chase all document the framework
+* Ian, Noah, John, Chase all document how we used the framework to build our example covert channel
+* Ian, Noah, John, Chase all help write final paper
 
 ### Project Timeline <a name="project-timeline"></a>
 
