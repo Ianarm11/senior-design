@@ -84,4 +84,6 @@ Covert channels are a major threat to software systems, yet upon researching the
 We do not have the constraints of a budget. Everything we plan on doing should come without a financial cost.
 
 ### Appendix <a name="appendix"></a>
-Appendix
+#### Appendix 1
+* Research Papers Reference
+* <a name="research-papers" href="https://github.com/Ianarm11/senior-design/tree/master/research-content">Link to research papers</a>
