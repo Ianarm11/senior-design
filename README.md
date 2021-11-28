@@ -35,7 +35,7 @@ Covert channels are a major threat to software systems, yet upon researching the
 * As a cyber security analysis, I want to learn from this framework, to help detect covert channels.
 
 ### Design Diagrams <a name="design-diagrams"></a>
-Add Photos here
+<a name="designdiagramphotos" href="https://github.com/Ianarm11/senior-design/tree/master/diagrams">Link to Design Diagrams</a>
 
 ### Project Tasks <a name="project-tasks"></a>
 * Read, research, and note-take on meltdown.pdf
@@ -66,15 +66,22 @@ Add Photos here
 * Ian, Noah, John, Chase all help write final paper
 
 ### Project Timeline <a name="project-timeline"></a>
+* Research Phase (01/01/2022 - 01/20/2022)
+* Framework Building Phase (01/20/2022 - 02/10/2022)
+* Covert Channel Example Phase (02/10/2022 - 03/25/2022)
+* Write Up Phase (03/25/2022 - 04/12/2022)
 
 ### SlideShow <a name="slide-show"></a>
-<a name="slideshow" href="https://docs.google.com/presentation/d/1zC0fOgd47DR2O0KbQtbw3557G1esKSuiSAYtaOJjVIM/edit?usp=sharing">Testing Link Here</a>
+<a name="slideshow" href="https://docs.google.com/presentation/d/1zC0fOgd47DR2O0KbQtbw3557G1esKSuiSAYtaOJjVIM/edit?usp=sharing">Link to Project Slide Show</a>
 
 ### Self-Assessment Essays <a name="essays"></a>
 Not sure what these are
 
 ### Professional Biographies <a name="biographies"></a>
+<a name="professionalbios" href="https://github.com/Ianarm11/senior-design/tree/master/professional-bios">Link to Professional Biographies</a>
 
 ### Budget <a name="budget"></a>
+We do not have the constraints of a budget. Everything we plan on doing should come without a financial cost.
 
 ### Appendix <a name="appendix"></a>
+Appendix
