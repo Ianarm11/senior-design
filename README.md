@@ -68,7 +68,7 @@ Add Photos here
 ### Project Timeline <a name="project-timeline"></a>
 
 ### SlideShow <a name="slide-show"></a>
-Add Link here
+<a name="slideshow" href="https://docs.google.com/presentation/d/1zC0fOgd47DR2O0KbQtbw3557G1esKSuiSAYtaOJjVIM/edit?usp=sharing">Testing Link Here</a>
 
 ### Self-Assessment Essays <a name="essays"></a>
 Not sure what these are
