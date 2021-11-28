@@ -75,7 +75,7 @@ Covert channels are a major threat to software systems, yet upon researching the
 <a name="slideshow" href="https://docs.google.com/presentation/d/1zC0fOgd47DR2O0KbQtbw3557G1esKSuiSAYtaOJjVIM/edit?usp=sharing">Link to Project Slide Show</a>
 
 ### Self-Assessment Essays <a name="essays"></a>
-<a name="self-assessments" href="">Link to Self Assessments</a>
+<a name="self-assessments" href="https://github.com/Ianarm11/senior-design/tree/master/self-assessments">Link to Self Assessments</a>
 
 ### Professional Biographies <a name="biographies"></a>
 <a name="professionalbios" href="https://github.com/Ianarm11/senior-design/tree/master/professional-bios">Link to Professional Biographies</a>
