@@ -75,13 +75,27 @@ def chksum(packet):
     return (~res) & 0xffff
 
 def main(argv):
+#    args = parser()
+#    packet = TCPPacket(
+#        0b000101001  # Merry Christmas!
+#    )
+#    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+#    #host = socket.gethostname()
+#    #s.connect((args.destination_host, args.destination_port))
+#    #s.bind((str(args.destination_host), args.destination_port))
+#    s.sendto(packet.build(), (str(args.destination_host), args.destination_port))
     args = parser()
+    host = socket.gethostname()
+    port = args.destination_port
+    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)      
+    s.connect((host,port))
+
     packet = TCPPacket(
-        0b000101001  # Merry Christmas!
+        0b010101010  # Merry Christmas!
     )
-    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
-    #s.bind((str(args.destination_host), args.destination_port))
-    s.sendto(packet.build(), (str(args.destination_host), args.destination_port))
+
+
+    s.sendall(packet.build())
 
 
 
