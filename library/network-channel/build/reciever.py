@@ -1,6 +1,7 @@
 import socket
 import struct
 import collections
+import os
 
 
 def receive_main(destinationPort, sourceHost, destinationHost):
@@ -39,38 +40,58 @@ def receive_main(destinationPort, sourceHost, destinationHost):
 
     return data_array
 
-def testReceiver(sender_host, receiver_host, receiver_port):
-    #server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # Functions like .listen and .accept will not work with RAW Sockets
-    # Should this be IPProto-TCP or UDP?
+def testReceiver():
+    # Hardcode the destination address and the destination port, for now
+    # host = '192.168.200.205' # This is Ian's IPv4 address, shhhhhhh
+    host = '127.0.0.1'
+    port = 1234
 
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
-    print("Creating socket..")
+    # Create a raw socekt..
+    # Parameter 1: AF_INET indicates this is for IPv4
+    # Parameter 2: SOCK_RAW just indicates we are using a raw socket
+    # Parameter 3: IPPROTO_RAW indicates that we supply the IP Header
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
+    print("Created raw socket..")
 
+    # connect() associates the socket with its local address, a client side operation.
+    server_socket.connect((host, port))
+    print("Successfully connected to " + str(host) + " on port " + str(port))
+
+    # ******* OLD CODE FOR REFERENCE ******* #
     # server_socket.bind((socket.gethostname(), 8910))
-    server_socket.bind((receiver_host, receiver_port))
-    # print("8910: %s" % (8910))
-    print("Binding socket..")
-    # Port 8910 is any port that is open from 1024 and above
-    # .gethostname() is my local machine, like my name on the terminal
+        # Port 8910 is any port that is open from 1024 and above
+        # .gethostname() is my local machine, like my name on the terminal
 
-    # server_socket.listen(5)
-    # print("Listening up to 5 requests on the socket..")
-
-    # print("Waiting for a connection..")
-    # (connection, address) = server_socket.accept()
-
+    # Now, lets see if we are receiving any packets..
     while True:
+        # recvfrom() receives data from the socket. Return value is a pair (bytes, address)
+            # bytes: bytes object representing the data recieved.
+            # address: address of the socket that sent the data.
+        # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
         print("Trying to receive the data from socket..")
         data = server_socket.recvfrom(1024)
-        print("Data: %s" % (data))
-        #print("Data Variable: %s \n" % (str(data))
-        if data is True:
-            print("Data received: %s \n" % (str(data)))
-        else:
-            print("No data..")
-            break
 
+        # Let's print out our data..
+        print("Length of bytes object from our received data: " + str(len(data[0])))
+        print("Printing out the data, bit by bit..")
+        for element in data[0]:
+            print(str(element))
+
+        print("Length of our address from our recieved data: " + str(len(data[1])))
+        print("Address of sending socket: " + data[1][0])
+
+        # ****** OLD CODE, NOT SURE WHAT TO DO WITH IT ***** #
+        #unpacked_data = struct.unpack('!sssssssss', bytes(data[1][0][0], encoding="utf-8"))
+        #for x in unpacked_data:
+            #try:
+                #print("Decoded Byte: %s" % (str(x.decode("utf-8"))))
+            #except:
+                #print("Error decoding the byte: " + str(x))
+
+        #if data is True:
+            #print("Data received: %s \n" % (str(data)))
+        #else:
+            #print("No data..")
+            #break
+        break
     print("Closing Receiver.")
-#if __name__ == '__main__':
-    #receive(666, '127.0.0.2')
