@@ -7,7 +7,6 @@ import socket
 import array
 
 # TODO:
-# Tell the stupid Kernel we are suplying the IP Header using .setsockopt() in sender.py
 # Tweak print statements so it is clear what data is what
 # Develop the encoding function for covert trasmission
     # Have a .txt file in the 'data' directory
@@ -63,12 +62,15 @@ def createTCPPacket(args):
     tcp_header += b'\x00\x00\x00\x00' # Sequence Number
     tcp_header += b'\x00\x00\x00\x00' # Acknowledgement Number
 
-    tcp_header = covertThings(tcp_header)
+    #tcp_header = covertThings(tcp_header)
     tcp_header += b'\x50\x02\x71\x10' # Data Offset, Reserved, Flags | Window Size
-    
+
     tcp_header += b'\xe6\x32\x00\x00' # Checksum | Urgent Pointer
 
-    packet = ip_header + tcp_header
+    data = b'Hello World'
+
+    #packet = ip_header + tcp_header
+    packet = tcp_header + data
 
     return packet
 
