@@ -14,10 +14,11 @@ def sender_main(TCPPacket):
     # Parameter 1: AF_INET indicates this is for IPv4
     # Parameter 2: SOCK_RAW just indicates we are using a raw socket
     # Parameter 3: IPPROTO_RAW indicates that we supply the IP Header
-    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
+    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW) #IPPROTO_TCP?
     print("Created raw socket..")
 
     # Function to set the socket options, not sure if we should be using it
+     # TODO: Tell the Kernel we are supplying the IP Header using setsockopt()
     # s.setsockopt()
 
     # We bind the socket with the receiver host and port.
@@ -27,5 +28,6 @@ def sender_main(TCPPacket):
 
     # Lets send data to the socket. Per documentation, this socket should not be connected to a remote socket.
     # snedto() takes in bytes and an address (a tuple).
-    s.sendto(TCPPacket.build(), (host, port)) # port used to be 0
+    #s.sendto(TCPPacket.build(), (host, port)) # port used to be 0
+    s.sendto(TCPPacket, (host, port))
     print("Sent packet to " + host + " at port " + str(port))

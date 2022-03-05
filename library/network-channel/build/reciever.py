@@ -50,11 +50,11 @@ def testReceiver():
     # Parameter 1: AF_INET indicates this is for IPv4
     # Parameter 2: SOCK_RAW just indicates we are using a raw socket
     # Parameter 3: IPPROTO_RAW indicates that we supply the IP Header
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
+    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
     print("Created raw socket..")
 
     # connect() associates the socket with its local address, a client side operation.
-    server_socket.connect((host, port))
+    s.connect((host, port))
     print("Successfully connected to " + str(host) + " on port " + str(port))
 
     # ******* OLD CODE FOR REFERENCE ******* #
@@ -69,7 +69,7 @@ def testReceiver():
             # address: address of the socket that sent the data.
         # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
         print("Trying to receive the data from socket..")
-        data = server_socket.recvfrom(1024)
+        data = s.recvfrom(1024)
 
         # Let's print out our data..
         print("Length of bytes object from our received data: " + str(len(data[0])))

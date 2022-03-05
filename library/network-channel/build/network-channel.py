@@ -6,6 +6,17 @@ import struct
 import socket
 import array
 
+# TODO:
+# Tell the stupid Kernel we are suplying the IP Header using .setsockopt() in sender.py
+# Tweak print statements so it is clear what data is what
+# Develop the encoding function for covert trasmission
+    # Have a .txt file in the 'data' directory
+    # Get the contents of that file in a byte array?
+    # In a loop, insert the specifc amount of bytes into a value of the TCP Header. Send a the packet.
+# Develop the decoding function for covert transmission
+# Smile and think about Saturday
+# On Saturday, get drunk and talk shit about Noah and Chase
+
 def main(argv):
     args = parser()
 
@@ -39,10 +50,26 @@ def parser():
 
 #############################################################
 # Function to create a custom TCP packet based on user input.
-# 0b010101010 == "Merry Christmas!"
 #############################################################
 def createTCPPacket(args):
-    packet = TCPPacket(args, 0b010101010)
+    #packet = TCPPacket(args, 0b010101010)
+    ip_header  = b'\x45\x00\x00\x28'  # Version, IHL, Type of Service | Total Length
+    ip_header += b'\xab\xcd\x00\x00'  # Identification | Flags, Fragment Offset
+    ip_header += b'\x40\x06\xa6\xec'  # TTL, Protocol | Header Checksum
+    ip_header += b'\x7f\x00\x00\x01'  # Source Address
+    ip_header += b'\x7f\x00\x00\x01'  # Destination Address, currently 127.0.0.1
+
+    tcp_header  = b'\x30\x39\x00\x50' # Source Port | Destination Port
+    tcp_header += b'\x00\x00\x00\x00' # Sequence Number
+    tcp_header += b'\x00\x00\x00\x00' # Acknowledgement Number
+
+    tcp_header = covertThings(tcp_header)
+    tcp_header += b'\x50\x02\x71\x10' # Data Offset, Reserved, Flags | Window Size
+    
+    tcp_header += b'\xe6\x32\x00\x00' # Checksum | Urgent Pointer
+
+    packet = ip_header + tcp_header
+
     return packet
 
 #######################################################
@@ -60,7 +87,6 @@ class TCPPacket:
         self.flags = flags
 
     def build(self):
-
         packet = struct.pack(
             '!sssssssss',               # Format for 9 values in bytes
             bytes(1234),                # Source Port
