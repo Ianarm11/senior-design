@@ -42,7 +42,6 @@ def receive_main(destinationPort, sourceHost, destinationHost):
 
 def testReceiver():
     # Hardcode the destination address and the destination port, for now
-    # host = '192.168.200.205' # This is Ian's IPv4 address, shhhhhhh
     host = '127.0.0.1'
     port = 1234
 
@@ -67,15 +66,23 @@ def testReceiver():
         # recvfrom() receives data from the socket. Return value is a pair (bytes, address)
             # bytes: bytes object representing the data recieved.
             # address: address of the socket that sent the data.
-        # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
+            # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
         print("Trying to receive the data from socket..")
         data = s.recvfrom(1024)
 
         # Let's print out our data..
         print("Length of bytes object from our received data: " + str(len(data[0])))
         print("Printing out the data, bit by bit..")
+        count = 0
         for element in data[0]:
-            print(str(element))
+            if count == 20:
+                print("TCP Header: ")
+            if count == 0:
+                print("IP Header supplied by the kernel: ")
+            if count == 40:
+                print("Data: ")
+            print((element))
+            count += 1
 
         print("Length of our address from our recieved data: " + str(len(data[1])))
         print("Address of sending socket: " + data[1][0])
