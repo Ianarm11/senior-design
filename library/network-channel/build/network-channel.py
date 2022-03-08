@@ -13,8 +13,6 @@ import array
     # Get the contents of that file in a byte array?
     # In a loop, insert the specifc amount of bytes into a value of the TCP Header. Send a the packet.
 # Develop the decoding function for covert transmission
-# Smile and think about Saturday
-# On Saturday, get drunk and talk shit about Noah and Chase
 
 def main(argv):
     args = parser()

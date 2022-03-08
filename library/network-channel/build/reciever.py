@@ -41,6 +41,9 @@ def receive_main(destinationPort, sourceHost, destinationHost):
     return data_array
 
 def testReceiver():
+    # Full message
+    aes_key = []
+
     # Hardcode the destination address and the destination port, for now
     host = '127.0.0.1'
     port = 1234
@@ -63,29 +66,37 @@ def testReceiver():
 
     # Now, lets see if we are receiving any packets..
     while True:
-        # recvfrom() receives data from the socket. Return value is a pair (bytes, address)
-            # bytes: bytes object representing the data recieved.
-            # address: address of the socket that sent the data.
-            # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
-        print("Trying to receive the data from socket..")
-        data = s.recvfrom(1024)
 
-        # Let's print out our data..
-        print("Length of bytes object from our received data: " + str(len(data[0])))
-        print("Printing out the data, bit by bit..")
-        count = 0
-        for element in data[0]:
-            if count == 20:
-                print("TCP Header: ")
-            if count == 0:
-                print("IP Header supplied by the kernel: ")
-            if count == 40:
-                print("Data: ")
-            print((element))
-            count += 1
+        for packet_count in range(0, 129):
+            # recvfrom() receives data from the socket. Return value is a pair (bytes, address)
+                # bytes: bytes object representing the data recieved.
+                # address: address of the socket that sent the data.
+                # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
+            print("Trying to receive the data from socket..")
+            data = s.recvfrom(1024)
 
-        print("Length of our address from our recieved data: " + str(len(data[1])))
-        print("Address of sending socket: " + data[1][0])
+            # Let's print out our data..
+            print("Length of bytes object from our received data: " + str(len(data[0])))
+            print("Printing out the data, bit by bit..")
+            count = 0
+            for element in data[0]:
+                if count == 20:
+                    print("TCP Header: ")
+                if count == 0:
+                    print("IP Header supplied by the kernel: ")
+                if count == 40:
+                    print("Data: ")
+                print((element))
+                count += 1
+
+            print("Covert byte: " + str(data[0][33]))
+            # Once we get covert byte, what do we do with it?
+                # Create a decoding fundtion
+                # Append to aes_key array
+            aes_key += str(data[0][33])
+
+            print("Length of our address from our recieved data: " + str(len(data[1])))
+            print("Address of sending socket: " + data[1][0])
 
         # ****** OLD CODE, NOT SURE WHAT TO DO WITH IT ***** #
         #unpacked_data = struct.unpack('!sssssssss', bytes(data[1][0][0], encoding="utf-8"))
@@ -101,4 +112,6 @@ def testReceiver():
             #print("No data..")
             #break
         break
+    # Create a function to print key
+    print("AES KEY: " + str(aes_key))
     print("Closing Receiver.")
