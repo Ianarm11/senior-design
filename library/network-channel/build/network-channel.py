@@ -5,6 +5,7 @@ import sender
 import struct
 import socket
 import array
+import binascii
 
 # TODO:
 # Tweak print statements so it is clear what data is what
@@ -47,6 +48,19 @@ def parser():
 
     return args
 
+def getCovertMessage():
+    messageFile = open(__file__ + "/../../data/covertMessage.txt")
+    plainCovertMessage = messageFile.read()
+    messageFile.close()
+
+    return plainCovertMessage
+
+def getBinaryMessage():
+
+    plainCovertMessage = getCovertMessage()
+    binaryCovertMessage = ' '.join(format(ord(x), 'b') for x in plainCovertMessage)
+    return binaryCovertMessage
+
 #############################################################
 # Function to create a custom TCP packet based on user input.
 #############################################################
@@ -63,6 +77,10 @@ def createTCPPacket(args):
     tcp_header += b'\x00\x00\x00\x00' # Acknowledgement Number
 
     #tcp_header = covertThings(tcp_header)
+    #########################################################################################################
+    #A good option for doing bit by bit encoding would be suing the PSH flag and turning that on or off
+    #the part were messing with is x02 = 0010. That third bit will be the one were changing (possibly)
+    #########################################################################################################
     tcp_header += b'\x50\x02\x71\x10' # Data Offset, Reserved, Flags | Window Size
 
     tcp_header += b'\xe6\x32\x00\x00' # Checksum | Urgent Pointer
