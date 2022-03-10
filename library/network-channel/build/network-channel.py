@@ -14,8 +14,6 @@ import binascii
     # Get the contents of that file in a byte array?
     # In a loop, insert the specifc amount of bytes into a value of the TCP Header. Send a the packet.
 # Develop the decoding function for covert transmission
-# Smile and think about Saturday
-# On Saturday, get drunk and talk shit about Noah and Chase
 
 def main(argv):
     args = parser()
@@ -70,7 +68,7 @@ def createTCPPacket(args):
     ip_header += b'\xab\xcd\x00\x00'  # Identification | Flags, Fragment Offset
     ip_header += b'\x40\x06\xa6\xec'  # TTL, Protocol | Header Checksum
     ip_header += b'\x7f\x00\x00\x01'  # Source Address
-    ip_header += b'\x7f\x00\x00\x01'  # Destination Address, currently 127.0.0.1
+    ip_header += b'\x7f\x00\x00\x01'  # Destination Address
 
     tcp_header  = b'\x30\x39\x00\x50' # Source Port | Destination Port
     tcp_header += b'\x00\x00\x00\x00' # Sequence Number
@@ -85,7 +83,7 @@ def createTCPPacket(args):
 
     tcp_header += b'\xe6\x32\x00\x00' # Checksum | Urgent Pointer
 
-    data = b'Hello World'
+    data = b'Hello'
 
     #packet = ip_header + tcp_header
     packet = tcp_header + data

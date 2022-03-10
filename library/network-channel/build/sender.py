@@ -14,12 +14,12 @@ def sender_main(TCPPacket):
     # Parameter 1: AF_INET indicates this is for IPv4
     # Parameter 2: SOCK_RAW just indicates we are using a raw socket
     # Parameter 3: IPPROTO_RAW indicates that we supply the IP Header
-    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW) #IPPROTO_TCP?
+    s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
     print("Created raw socket..")
 
     # Function to set the socket options, not sure if we should be using it
      # TODO: Tell the Kernel we are supplying the IP Header using setsockopt()
-    # s.setsockopt()
+     # On second thought, lets just let the kernel handle the IP Header
 
     # We bind the socket with the receiver host and port.
         # bind() is for defining the communication end point, usually a server-side operation.
