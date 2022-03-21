@@ -4,9 +4,10 @@ import socket
 import struct
 import array
 
-# Used to take in 2 args variables
-def sender_main(TCPPacket):
-    # host = '192.168.200.205'
+############################
+# Main sender functionality.
+############################
+def Sender(TCPPacket):
     host = '127.0.0.1'
     port = 1234
 
@@ -16,10 +17,6 @@ def sender_main(TCPPacket):
     # Parameter 3: IPPROTO_RAW indicates that we supply the IP Header
     s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
     print("Created raw socket..")
-
-    # Function to set the socket options, not sure if we should be using it
-     # TODO: Tell the Kernel we are supplying the IP Header using setsockopt()
-     # On second thought, lets just let the kernel handle the IP Header
 
     # We bind the socket with the receiver host and port.
         # bind() is for defining the communication end point, usually a server-side operation.
