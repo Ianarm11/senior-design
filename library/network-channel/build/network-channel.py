@@ -9,18 +9,21 @@ import binascii
 
 # TODO:
 # Tweak print statements so it is clear what data is what
-# Develop the encoding function for covert trasmission
-    # Have a .txt file in the 'data' directory
-    # Get the contents of that file in a byte array?
-    # In a loop, insert the specifc amount of bytes into a value of the TCP Header. Send a the packet.
+# Develop the encoding function for covert trasmission -- DONE
+    # Have a .txt file in the 'data' directory -- DONE
+    # Get the contents of that file in a byte array? -- DONE
+    # In a loop, insert the specifc amount of bytes into a value of the TCP Header. Send a the packet. -- DONE
 # Develop the decoding function for covert transmission
 
 def main(argv):
     args = parser()
-
+    fudgedLineArray = createFudgedLineArray()
     # Dependent on the --sender or --receiver arguements
     if args.action == True:
-        sender.sender_main(createTCPPacket(args))
+        
+        for i in range(len(fudgedLineArray)):
+            print(str(fudgedLineArray[i]))
+            sender.sender_main(createTCPPacket(args, fudgedLineArray[i]))
     else:
         reciever.testReceiver()
 
@@ -56,13 +59,31 @@ def getCovertMessage():
 def getBinaryMessage():
 
     plainCovertMessage = getCovertMessage()
-    binaryCovertMessage = ' '.join(format(ord(x), 'b') for x in plainCovertMessage)
+    #binaryCovertMessage = ''.join(format(ord(x), 'b') for x in plainCovertMessage)
+    binaryCovertMessage = "{0:08b}".format(int(plainCovertMessage, 16))
+    print(binaryCovertMessage)
     return binaryCovertMessage
+
+def createFudgedLineArray():
+
+    binaryString = getBinaryMessage()
+    fudgedLineArray = []
+    print(len(binaryString))
+    for i in range(len(binaryString)):
+        if binaryString[i] == '0':
+            fudgedLineArray.append(b'\x50\x00\x71\x10')
+        else:
+            fudgedLineArray.append(b'\x50\x02\x71\x10')
+        
+
+    return fudgedLineArray
+
+   
 
 #############################################################
 # Function to create a custom TCP packet based on user input.
 #############################################################
-def createTCPPacket(args):
+def createTCPPacket(args, fudgedLine):
     #packet = TCPPacket(args, 0b010101010)
     ip_header  = b'\x45\x00\x00\x28'  # Version, IHL, Type of Service | Total Length
     ip_header += b'\xab\xcd\x00\x00'  # Identification | Flags, Fragment Offset
@@ -79,7 +100,8 @@ def createTCPPacket(args):
     #A good option for doing bit by bit encoding would be suing the PSH flag and turning that on or off
     #the part were messing with is x02 = 0010. That third bit will be the one were changing (possibly)
     #########################################################################################################
-    tcp_header += b'\x50\x02\x71\x10' # Data Offset, Reserved, Flags | Window Size
+    tcp_header += fudgedLine # Data Offset, Reserved, Flags | Window Size
+    # b'\x50\x02\x71\x10' Originally
 
     tcp_header += b'\xe6\x32\x00\x00' # Checksum | Urgent Pointer
 

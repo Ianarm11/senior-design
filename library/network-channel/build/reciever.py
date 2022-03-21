@@ -2,7 +2,7 @@ import socket
 import struct
 import collections
 import os
-
+import binascii
 
 def receive_main(destinationPort, sourceHost, destinationHost):
     HOST = destinationHost
@@ -40,6 +40,22 @@ def receive_main(destinationPort, sourceHost, destinationHost):
 
     return data_array
 
+def getCovertMessage(dataArray):
+
+    temp = []
+    binaryCovertMessage = []
+    for i in range(len(dataArray)):
+        if dataArray[i][33] == 2:
+            binaryCovertMessage.append('1')
+        else:
+            binaryCovertMessage.append('0')
+
+    binaryCovertMessage = ''.join(binaryCovertMessage)
+    print (len(binaryCovertMessage))
+    print(binaryCovertMessage)
+    binaryCovertMessage = int(binaryCovertMessage,2)
+    print(hex(binaryCovertMessage))
+
 def testReceiver():
     # Hardcode the destination address and the destination port, for now
     host = '127.0.0.1'
@@ -62,18 +78,29 @@ def testReceiver():
         # .gethostname() is my local machine, like my name on the terminal
 
     # Now, lets see if we are receiving any packets..
+
+    dataArray = []
+
     while True:
         # recvfrom() receives data from the socket. Return value is a pair (bytes, address)
             # bytes: bytes object representing the data recieved.
             # address: address of the socket that sent the data.
             # Takes in a buffer size. For now, just try to get it all using 1024 (large size)
         print("Trying to receive the data from socket..")
-        data = s.recvfrom(1024)
-
+        timeout = s.settimeout(5.0)
+        try:
+            data = s.recvfrom(1024)
+        except socket.timeout:
+                print("No more incoming data. Pulling out Covert Message...")
+                getCovertMessage(dataArray)
+                break
+        
+        dataArray.append(data[0])
         # Let's print out our data..
         print("Length of bytes object from our received data: " + str(len(data[0])))
         print("Printing out the data, bit by bit..")
         count = 0
+        
         for element in data[0]:
             if count == 20:
                 print("TCP Header: ")
@@ -100,5 +127,5 @@ def testReceiver():
         #else:
             #print("No data..")
             #break
-        break
+        
     print("Closing Receiver.")
