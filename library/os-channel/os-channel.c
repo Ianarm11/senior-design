@@ -38,7 +38,7 @@ int findGap(int array[], int size){
 }
 
 
-int getCacheAccessTime(){
+int getCacheAccessTime(){d
     int testArraySize = 8; // the smaller this is, the more pronounced the gap difference tends to be
     char testArray[testArraySize*4096];
     int placeholder = 0;
@@ -60,9 +60,9 @@ int getCacheAccessTime(){
     // times how long it takes to access each item
     for (int i = 0; i < testArraySize; i++){
         addr = &testArray[i*4096 + OFFSET];
-        startTime = __rdtscp(&placeholder);
+        startTime = __rdtscp(&placeholder); //__rdtscp(address1) returns the number of ticks since computer startup after address1 is accessed.
         placeholder = *addr;
-        totalTime = __rdtscp(&placeholder) - startTime;
+        totalTime = __rdtscp(&placeholder) - startTime; // here, we're timing the number of ticks it takes to access the tested address.
         timeArray[i] = (int)totalTime;
     }
 
@@ -99,6 +99,7 @@ int reload(int threshold){
     int placeholder = 0;
     register uint64_t startTime, totalTime;
 
+    // this uses the same process as getCacheAccessTime
     for (int i = 0; i < 256; i++){
         addr = &meltdownArray[i*4096 + OFFSET];
         startTime = __rdtscp(&placeholder);
@@ -112,8 +113,9 @@ int reload(int threshold){
 
 int main(int argc, char **argv){
     int cacheAccessTime = getCacheAccessTime();
-    printf("%i\n", cacheAccessTime);
-    unsigned char privelegedValue = 254;
+    // printf("%i\n", cacheAccessTime);
+
+    unsigned char privelegedValue = 254; // this is the hidden value that, in normal meltdown, would belong to kernel memory.
 
 
     // initializing the array
