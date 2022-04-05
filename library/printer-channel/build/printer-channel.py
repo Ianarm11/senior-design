@@ -48,7 +48,7 @@ def Sender():
         # ImageableArea is a dictionary of the paper as a rectangle. left (int), top(int), right (int), bottom (int)
     size = {'cx':215900, 'cy':279400}
     image_area = {'left':0, 'top':0, 'right':215900, 'bottom':279400}
-    form = {'Flags':1, 'Name': "Snow: Secret Covert Message", 'Size':size, 'ImageableArea':image_area}
+    form = {'Flags':1, 'Name': "tolkien :cafeteria at noon", 'Size':size, 'ImageableArea':image_area}
     # Add the Form to the printer using the handler
     win32print.AddForm(hprinter, form)
     # Close the printer's handler
@@ -56,15 +56,25 @@ def Sender():
 
 def Receiver():
     print("Receiving..")
+    secret_message = ""
+
     # Grab the name of the default printer that Windows sets
     default_printer = win32print.GetDefaultPrinter()
     # Open a handler for the default printer we are working with
     hprinter = win32print.OpenPrinter(default_printer)
+
+    # Loop through the forms and find the one with the keyword
+    list_of_forms = win32print.EnumForms(hprinter)
+    for form in list_of_forms:
+        if "tolkien" in form["Name"]:
+            secret_message = form["Name"]
+            break
+
     # Grab the form from the printer using the name
-        #TODO need to find a way to find the Form without knowing the full name.
-    covert_form = win32print.GetForm(hprinter, "Snow: secret Covert Message")
-    print("Covert Message: " + covert_form["Name"])
-    # TODO: NEED TO DELETE THE FORM
+    covert_form = win32print.GetForm(hprinter, secret_message)
+    print("Covert Message: " + secret_message)
+    win32print.DeleteForm(hprinter, covert_form["Name"])
+
     # Close the printer's handler
     win32print.ClosePrinter(hprinter)
 
